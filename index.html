@@ -108,9 +108,9 @@
 
       function copyToClipboard() {
         let outputText = document.getElementById("outputText");
-        navigator.clipboard.writeText(outputText.value).then(() => {
-          alert("Text copied to clipboard!");
-        });
+        outputText.select();
+        outputText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
       }
 
       function changeTheme() {
