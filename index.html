@@ -58,34 +58,59 @@
 
     <script>
       function formatText() {
-        let input = document.getElementById("inputText").value;
+        let input = document.getElementById("inputText").value.trim();
         let lines = input.split("\n");
         let formattedText = "";
-        let normalText = "";
+        let currentName = null;
+        let currentContent = "";
+        let introText = "";
 
         for (let i = 0; i < lines.length; i++) {
           let line = lines[i].trim();
-          if (line.startsWith("| ")) {
-            let speaker = line.replace("| ", "").trim();
-            let dialogue = lines[i + 1] ? lines[i + 1].trim() : "";
-            formattedText += `${speaker}: ${dialogue}\n`;
-            i++;
+
+          // Loại bỏ ký tự "|" nếu có ở đầu dòng
+          line = line.replace(/^(\|\s*)/, "");
+
+          // Kiểm tra nếu dòng là tên hợp lệ (chỉ gồm một từ chữ cái không chứa dấu cách)
+          if (/^[A-Za-zÀ-ỹ]+$/.test(line)) {
+            // Nếu introText chưa được lưu, lưu nó trước
+            if (introText) {
+              formattedText += introText.trim() + "\n";
+              introText = "";
+            }
+            // Nếu có dữ liệu trước đó thì lưu lại trước khi thay tên mới
+            if (currentName !== null) {
+              formattedText += `${currentName}: ${currentContent.trim()}\n`;
+            }
+            currentName = line;
+            currentContent = "";
           } else {
-            normalText += line + " ";
+            // Nếu chưa gặp nhân vật nào, gom vào đoạn mở đầu
+            if (currentName === null) {
+              introText += (introText ? " " : "") + line;
+            } else {
+              // Nếu đã gặp nhân vật, nối vào nội dung của họ
+              currentContent += (currentContent ? " " : "") + line;
+            }
           }
         }
 
-        normalText = normalText.trim(); // Remove extra spaces
-        if (normalText) formattedText = normalText + "\n" + formattedText;
+        // Thêm nội dung cuối cùng nếu có
+        if (currentName !== null) {
+          formattedText += `${currentName}: ${currentContent.trim()}\n`;
+        } else if (introText) {
+          formattedText += introText.trim() + "\n";
+        }
+
+        // Hiển thị kết quả
         document.getElementById("outputText").value = formattedText.trim();
       }
 
       function copyToClipboard() {
         let outputText = document.getElementById("outputText");
-        outputText.select();
-        outputText.setSelectionRange(0, 99999); // For mobile devices
-        document.execCommand("copy");
-        // alert("Text copied to clipboard!");
+        navigator.clipboard.writeText(outputText.value).then(() => {
+          alert("Text copied to clipboard!");
+        });
       }
 
       function changeTheme() {
