@@ -1,0 +1,207 @@
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --light-bg: #ffffff;
+  --dark-bg: #212529;
+  --light-text: #212529;
+  --dark-text: #f8f9fa;
+  --light-border: #dee2e6;
+  --dark-border: #495057;
+  --light-toolbar: #f8f9fa;
+  --dark-toolbar: #343a40;
+  --transition-speed: 0.3s;
+}
+
+/* Base styles */
+body {
+  padding: 20px;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed);
+  min-height: 100vh;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Editor container */
+.editor-container {
+  background: var(--light-bg);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed);
+}
+
+.dark-mode .editor-container {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background: var(--light-toolbar);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  transition: background-color var(--transition-speed);
+}
+
+.dark-mode .toolbar {
+  background: var(--dark-toolbar);
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  border-right: 1px solid var(--light-border);
+}
+
+.dark-mode .toolbar-group {
+  border-right-color: var(--dark-border);
+}
+
+.toolbar-group:last-child {
+  border-right: none;
+}
+
+/* Editor and Preview */
+.editor,
+.preview {
+  width: 100%;
+  min-height: 300px;
+  padding: 15px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.dark-mode .editor,
+.dark-mode .preview {
+  background: var(--dark-toolbar);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.preview {
+  background: var(--light-toolbar);
+  overflow-y: auto;
+}
+
+/* Stats section */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: var(--light-toolbar);
+  border-radius: 4px;
+  transition: background-color var(--transition-speed);
+}
+
+.dark-mode .stats {
+  background: var(--dark-toolbar);
+}
+
+/* Buttons */
+.btn-toolbar {
+  padding: 5px 10px;
+  font-size: 14px;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed);
+}
+
+.btn-toolbar.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Find and Replace */
+.find-replace {
+  display: none;
+  padding: 10px;
+  background: var(--light-toolbar);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  transition: background-color var(--transition-speed);
+}
+
+.dark-mode .find-replace {
+  background: var(--dark-toolbar);
+}
+
+/* Export options */
+.export-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .toolbar-group {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+    padding-bottom: 10px;
+  }
+
+  .dark-mode .toolbar-group {
+    border-bottom-color: var(--dark-border);
+  }
+
+  .toolbar-group:last-child {
+    border-bottom: none;
+  }
+
+  .export-options {
+    flex-direction: column;
+  }
+
+  .export-options .btn {
+    width: 100%;
+  }
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
+/* Form controls in dark mode */
+.dark-mode .form-control,
+.dark-mode .form-select {
+  background-color: var(--dark-toolbar);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+  background-color: var(--dark-toolbar);
+  color: var(--dark-text);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
